@@ -1,3 +1,5 @@
+import unicodedata
+
 class Table:
     """
     A simple ASCII table generator.
@@ -10,7 +12,6 @@ class Table:
         self.header = data[0]
         self.rows = data[1:]
         self.data = data
-        # self.columns = [[d[i] for d in data] for i in range(self.col_num)]
         self.width = self.col_num - 1
 
     @property
@@ -21,30 +22,51 @@ class Table:
     @property
     def col_width(self):
         "Width of each column"
-        return [[len(str(d[i])) for d in self.data] for i in range(self.col_num)]
-
+        return [[self._len(str(d[i])) for d in self.data] for i in range(self.col_num)] 
+    
+    def _len(self, text: str) -> int:
+        width = 0
+        for char in text:
+            width += 2 if unicodedata.east_asian_width(char) in ('F', 'W', 'A') else 1
+        return width
+    
+    def _pad(self, text: str, width: int) -> str:
+        "Pad text to visual width using spaces"
+        visual_len = self._len(text)
+        if visual_len >= width:
+            return text
+        return text + " " * (width - visual_len)
+    
     def create(self) -> str:
         """Creates the table"""
         output = []
-        c = {}
-        for i, col_w in enumerate(self.col_width):
+        col_widths = []
+        
+        for i in range(self.col_num):
+            col_w = [self._len(str(d[i])) for d in self.data]
             mx_w = max(col_w)
-            c[f'c_{i+1}'] = mx_w
+            col_widths.append(mx_w)
             self.width += mx_w + 2
 
         output.append("+" + "-" * self.width + "+")
-        row_fmt = "| " + " | ".join(["{:<{c_%d}}" % (i + 1) for i in range(self.col_num)]) + " |"
-        output.append(row_fmt.format(*self.header, **c))
+        
+        cells = []
+        for i, header in enumerate(self.header):
+            cells.append(" " + self._pad(str(header), col_widths[i]) + " ")
+        output.append("|" + "|".join(cells) + "|")
+        
         output.append("|" + "-" * self.width + "|")
 
         for row in self.rows:
-            row_fmt = "| " + " | ".join(["{:<{c_%d}}" % (i + 1) for i in range(self.col_num)]) + " |"
-            output.append(row_fmt.format(*row, **c))
+            cells = []
+            for i, cell in enumerate(row):
+                cells.append(" " + self._pad(str(cell), col_widths[i]) + " ")
+            output.append("|" + "|".join(cells) + "|")
 
         output.append("+" + "-" * self.width + "+")
-
         return '\n'.join(output)
 
     def display(self):
         """Prints the table"""
         return print(self.create())
+
