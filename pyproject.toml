@@ -1,6 +1,6 @@
 [project]
 name = "tableascii"
-dynamic = ["version"]
+version = "0.1.2"
 description = "A lightweight, simple Python library to create clean ASCII Table."
 readme = "README.md"
 authors = [
@@ -22,7 +22,7 @@ Source = "https://github.com/Tari-dev/tableascii"
 "Bug Tracker" = "https://github.com/Tari-dev/tableascii/issues"
 
 [build-system]
-requires = ["uv_build>=0.12.5,<0.13.0", "setuptools-scm"]
+requires = ["uv_build>=0.12.5,<0.13.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
