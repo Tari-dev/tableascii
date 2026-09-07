@@ -1,6 +1,6 @@
 [project]
 name = "tableascii"
-version = "0.1.1"
+dynamic = ["version"]
 description = "A lightweight, simple Python library to create clean ASCII Table."
 readme = "README.md"
 authors = [
@@ -8,8 +8,7 @@ authors = [
 ]
 requires-python = ">=3.6"
 dependencies = []
-license = "MIT"
-license-files = ["LICENSE"]
+license = {text = "MIT"}
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -23,12 +22,9 @@ Source = "https://github.com/Tari-dev/tableascii"
 "Bug Tracker" = "https://github.com/Tari-dev/tableascii/issues"
 
 [build-system]
-requires = ["uv_build>=0.12.5,<0.13.0"]
+requires = ["uv_build>=0.12.5,<0.13.0", "setuptools-scm"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-root = "."
 module-name = "tableascii"
-
-[tool.setuptools]
-packages = ["tableascii"]
