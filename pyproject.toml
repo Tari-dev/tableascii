@@ -1,3 +1,30 @@
+[project]
+name = "tableascii"
+version = "0.1.2"
+description = "A lightweight, simple Python library to create clean ASCII Table."
+readme = "README.md"
+authors = [
+    { name = "Tariq Muhammed", email = "tariqmuhammmad02@gmail.com" }
+]
+requires-python = ">=3.6"
+dependencies = []
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://tari-dev.github.io/tableascii/"
+Documentation = "https://tari-dev.github.io/tableascii/"
+Source = "https://github.com/Tari-dev/tableascii"
+"Bug Tracker" = "https://github.com/Tari-dev/tableascii/issues"
+
 [build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = "."
+module-name = "tableascii"
