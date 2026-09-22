@@ -58,3 +58,57 @@ def test_mixed_content():
     out = t.create()
     lines = out.split("\n")
     assert all(_visual_len(line) == _visual_len(lines[0]) for line in lines)
+
+
+def test_complex_emoji_widths():
+    # Verify exact 2-column width for various emoji sequence types
+    assert _visual_len("👍") == 2
+    assert _visual_len("👍🏽") == 2
+    assert _visual_len("👨‍👩‍👧‍👦") == 2
+    assert _visual_len("👩‍💻") == 2
+    assert _visual_len("🏃‍♀️") == 2
+    assert _visual_len("🏳️‍🌈") == 2
+    assert _visual_len("❤️‍🔥") == 2
+    assert _visual_len("🇺🇸") == 2
+    assert _visual_len("🏴󠁧󠁢󠁳󠁣󠁴󠁿") == 2
+    assert _visual_len("1️⃣") == 2
+    assert _visual_len("❤️") == 2
+    assert _visual_len("⚠️") == 2
+
+
+def test_complex_emoji_table_alignment():
+    data = [
+        ["User", "Emoji Type", "Status"],
+        ["Alice", "👍🏽 (Skin tone)", "Active"],
+        ["Bob", "👨‍👩‍👧‍👦 (ZWJ family)", "Busy"],
+        ["Carol", "👩‍💻 (ZWJ profession)", "Coding"],
+        ["Dave", "🇺🇸 (Country flag)", "Travel"],
+        ["Eve", "🏴󠁧󠁢󠁳󠁣󠁴󠁿 (Subdivision flag)", "Holiday"],
+        ["Frank", "1️⃣ (Keycap)", "Top"],
+        ["Grace", "❤️‍🔥 (Heart on fire)", "Loved"],
+    ]
+    t = Table(data)
+    out = t.create()
+    lines = out.split("\n")
+    assert all(_visual_len(line) == _visual_len(lines[0]) for line in lines)
+
+
+def test_user_leaderboard_table():
+    data = [
+        ["#", "Username", "Level", "XP"],
+        ["21", "yay hi", "4", "98"],
+        ["22", "queenie", "4", "0"],
+        ["23", "Duck 🦆🦆🦆", "3", "236"],
+        ["24", "Vollupie", "3", "176"],
+        ["25", "I don't murder children", "3", "0"],
+        ["26", "AMOPYY", "3", "0"],
+        ["27", "Ayush@AFMC", "3", "0"],
+        ["28", "queenie", "3", "0"],
+        ["29", "⭕⃤ Ξ｢Diamond｣Ξ", "2", "213"],
+        ["30", "Tanjiro Kamado", "2", "190"],
+    ]
+    t = Table(data)
+    out = t.create()
+    lines = out.split("\n")
+    assert all(_visual_len(line) == _visual_len(lines[0]) for line in lines)
+

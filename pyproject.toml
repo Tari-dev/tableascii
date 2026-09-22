@@ -1,6 +1,6 @@
 [project]
 name = "tableascii"
-version = "0.1.2"
+version = "0.1.3"
 description = "A lightweight, simple Python library to create clean ASCII Table."
 readme = "README.md"
 authors = [
@@ -28,3 +28,12 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-root = "."
 module-name = "tableascii"
+
+[tool.uv.sources]
+tableascii = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0.1",
+    "tableascii",
+]
